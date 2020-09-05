@@ -1,0 +1,31 @@
+* {
+    margin :0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  #main-content {
+      display: flex;
+      flex-wrap: wrap;
+      width: 484px;
+      height: 404px;
+      border: 2px solid black
+  }
+
+  .div {
+      width: 40px;
+      height: 40px;
+  }
+
+  .wall {
+      background-color: blue;
+  }
+
+  .life {
+    background-color: red;
+}
+
+.chemin {
+    background-color: white;
+}
