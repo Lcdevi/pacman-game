@@ -3,29 +3,54 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Courier New', Courier, monospace;
-  }
+}
 
-  #main-content {
-      display: flex;
-      flex-wrap: wrap;
-      width: 484px;
-      height: 404px;
-      border: 2px solid black
-  }
+.main-content {
+    display: flex;
+    flex-wrap: wrap;
+    width: 484px;
+    height: 404px; 
+    border: 2px solid black
+}
 
-  .div {
-      width: 40px;
-      height: 40px;
-  }
+.main-content-level-1 {
+    display: flex;
+    flex-wrap: wrap;
+    width: 404px;
+    height: 164px; 
+    border: 2px solid black
+}
 
-  .wall {
-      background-color: blue;
-  }
+.div {
+    width: 40px;
+    height: 40px;
+}
 
-  .life {
+.wall {
+    background-color: blue;
+}
+
+.life {
     background-color: red;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
 }
 
 .chemin {
     background-color: white;
+}
+
+.wolf {
+    background-color: rgb(36, 36, 36);
+    border-radius: 50%;
+}
+
+.open-wall {
+    background-color: orange;
+}
+
+.walker {
+    background-color: yellow;
+    border-radius: 50%;
 }
