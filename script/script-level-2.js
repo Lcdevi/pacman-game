@@ -1,7 +1,7 @@
 const mainContent = document.querySelector('.main-content');
 mainContent.classList.add('main-content-level-2');
 let displayScore = document.getElementById('score');
-let score = 2;
+let score = 5;
 displayScore.innerHTML = score;
 //push toutes les divs dans cet array pour pouvoir retrouver chaque div avec un index.
 //const arrayOfDiv = []; 
@@ -10,7 +10,8 @@ displayScore.innerHTML = score;
 
 const walker = {
     x: 8,
-    y: 0
+    y: 0,
+    index: 96
   };
 
 const win = {
@@ -18,7 +19,7 @@ const win = {
     y: 11
 };
 
-const scoreToWin = 3;
+const scoreToWin = 10;
 
 
 
@@ -112,7 +113,7 @@ window.addEventListener('keydown', (event) => {
             grid[walker.x][walker.y] = '4';
             walker.y--;
             grid[walker.x][walker.y] = "5";
-            score = score + 1;
+            score = score + 5;
             displayScore.innerHTML = score;
         }
 
@@ -130,7 +131,7 @@ window.addEventListener('keydown', (event) => {
             grid[walker.x][walker.y] = '4';
             walker.x--;
             grid[walker.x][walker.y] = "5";
-            score = score + 1;
+            score = score + 5;
             displayScore.innerHTML = score;
         }
     } 
@@ -154,7 +155,7 @@ window.addEventListener('keydown', (event) => {
         } else if (grid[i][j] === '3') {
           //  nodeListOfDivs[(11*i)+i+j].classList.remove('walker');
            // nodeListOfDivs[(11*i)+i+j].classList.add('open-wall'); 
-        }
+        } 
     }
 }
 }
@@ -223,11 +224,20 @@ function moveWolves(wolf){
         nodeListOfDivs[wolf.index].classList.add(wolf.name, 'wolf')
         nodeListOfDivs[wolf.index].classList.remove('chemin')
     } else {direction = directions[Math.floor(Math.random() * directions.length)]};
+//    if(nodeListOfDivs[wolf.index].classList.contains('walker')) {
+//        nodeListOfDivs[wolf.index].classList.add('shake-horizontal');
+//        score = score - 1;
+//        displayScore.innerHTML = score;
+//    }
+//    if(score <= -40) {
+//        gameOver();
+//    }
 }, wolf.speed)
-
-    //else find a new random direction ot go in
 }
 
+//function gameOver() {
+//    alert("GAME OVER !")
+//}
 
 //moveWolves(merlin)
 
@@ -255,3 +265,18 @@ function moveWolves() {
     }
     moveWolves();
     */
+
+
+// -------------------------------------- COLLISION -------------------------------------------------------
+// Si la position du loup (index) contient la classe walker,
+// Alors : 
+// score -1
+// la classe walker scintille pendant une seconde
+// si score === 0
+// Alors :
+// Game Over
+
+// if(nodeListOfDivs[wolf.index].classList.contains('walker')) {
+//    score = score - 1;
+//    displayScore.innerHTML = score;
+//    }
