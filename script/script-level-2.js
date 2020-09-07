@@ -175,10 +175,10 @@ const merlin = new Wolf({
     wolfX: 8,
     wolfY: 10,
     index: 106,
-    speed: 200
+    speed: 140
 }); // creates a new instance of Wolf
 
-/*
+
 const perceval = new Wolf({
     name: "perceval",
     wolfX: 8,
@@ -186,17 +186,26 @@ const perceval = new Wolf({
     index: 105,
     speed: 100
 }); // creates an other instance of Wolf
-*/
 
+let wolvesArr = [];
+wolvesArr.push(merlin, perceval)
+
+console.log(wolvesArr)
 
 
 //create the merlin the wolf in the DOM
-grid[merlin.wolfX][merlin.wolfY] = "2";
-nodeListOfDivs[merlin.index].classList.remove('chemin')
-nodeListOfDivs[merlin.index].classList.add(merlin.name, 'wolf')
+
+wolvesArr.forEach(eachWolf => {
+    grid[eachWolf.wolfX][eachWolf.wolfY] = "2";
+    nodeListOfDivs[eachWolf.index].classList.remove('chemin')
+    nodeListOfDivs[eachWolf.index].classList.add(eachWolf.name, 'wolf')
+    })
 
 
-// move wolf function
+wolvesArr.forEach(eachWolf => moveWolves(eachWolf))
+
+
+// move wolf function----------------- SET INTERVAL --------------------------
 function moveWolves(wolf){
     const directions = [-1, +1, -12, +12];
     let direction = directions[Math.floor(Math.random() * directions.length)];
@@ -205,7 +214,7 @@ function moveWolves(wolf){
     //if in the next square merlin is going to go to does not have a wall
     if (!nodeListOfDivs[wolf.index + direction].classList.contains('wall')) {
          //remove the ghosts classes
-         nodeListOfDivs[wolf.index].classList.remove(merlin.name)
+         nodeListOfDivs[wolf.index].classList.remove(wolf.name)
          nodeListOfDivs[wolf.index].classList.remove('wolf')
          nodeListOfDivs[wolf.index].classList.add('chemin')
         //move into that space
@@ -214,24 +223,35 @@ function moveWolves(wolf){
         nodeListOfDivs[wolf.index].classList.remove('chemin')
 
     } else {direction = directions[Math.floor(Math.random() * directions.length)]};
-
-    for (let i = 0; i<grid.length; i++) {
-        for (let j = 0; j<grid[i].length; j++) {
-        if (grid[i][j] === '5') {
-            nodeListOfDivs[(11*i)+i+j].classList.add('walker');
-        } else if (grid[i][j] === '4') {
-            nodeListOfDivs[(11*i)+i+j].classList.remove('walker');
-            nodeListOfDivs[(11*i)+i+j].classList.remove('life');
-        } else if (grid[i][j] === '3') {
-          //  nodeListOfDivs[(11*i)+i+j].classList.remove('walker');
-           // nodeListOfDivs[(11*i)+i+j].classList.add('open-wall'); 
-        }
-    }
-
-}
-}, 200)
+}, wolf.speed)
 
     //else find a new random direction ot go in
 }
 
-moveWolves(merlin)
+
+//moveWolves(merlin)
+
+
+// request Animation Frame
+/*
+function moveWolves() {
+    const directions = [-1, +1, -12, +12];
+    let direction = directions[Math.floor(Math.random() * directions.length)];
+    console.log(direction)
+    //if in the next square merlin is going to go to does not have a wall
+    if (!nodeListOfDivs[merlin.index + direction].classList.contains('wall')) {
+         //remove the ghosts classes
+         nodeListOfDivs[merlin.index].classList.remove(merlin.name)
+         nodeListOfDivs[merlin.index].classList.remove('wolf')
+         nodeListOfDivs[merlin.index].classList.add('chemin')
+        //move into that space
+        merlin.index += direction;
+        nodeListOfDivs[merlin.index].classList.add(merlin.name, 'wolf')
+        nodeListOfDivs[merlin.index].classList.remove('chemin')
+
+    } else {direction = directions[Math.floor(Math.random() * directions.length)]};
+
+      requestAnimationFrame(moveWolves);
+    }
+    moveWolves();
+    */
