@@ -87,10 +87,9 @@ window.addEventListener('keydown', (event) => {
             grid[walker.x][walker.y] = "5";
             grid[2][9] = '4';
             nodeListOfDivs[29].classList.add('chemin'); 
-        }
-
-       
+        }      
     } 
+
     if (event.key === 'ArrowLeft') { 
         console.log('left press');
         if(grid[walker.x][walker.y-1] === '4'||grid[walker.x][walker.y-1] === '1'||grid[walker.x][walker.y-1] === '3') {
@@ -100,6 +99,7 @@ window.addEventListener('keydown', (event) => {
         }
 
     } 
+
     if (event.key === 'ArrowUp') { 
         console.log('up press');
         if(grid[walker.x-1][walker.y] === '4') {
@@ -115,6 +115,7 @@ window.addEventListener('keydown', (event) => {
             displayScore.innerHTML = score;
         }
     } 
+    
     if (event.key === 'ArrowDown') { 
         console.log('down press');
         if(grid[walker.x+1][walker.y] === '4'||grid[walker.x+1][walker.y] === '1' ) {

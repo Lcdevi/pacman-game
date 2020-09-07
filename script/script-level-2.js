@@ -27,7 +27,7 @@ const scoreToWin = 3;
     ['4','4','0','0','0','0','0','0','0','0','4','4'],
     ['0','4','0','1','4','0','0','0','0','0','4','0'],
     ['0','4','0','4','4','4','4','4','4','4','4','0'],
-    ['0','4','0','4','4','0','4','0','0','0','0','0'],
+    ['0','4','0','0','0','0','4','0','0','0','0','0'],
     ['0','4','0','0','0','0','4','4','4','4','4','0'],
     ['0','4','4','4','3','4','4','0','0','0','0','0'],
     ['0','0','0','0','0','0','4','0','0','4','4','0'],
@@ -61,27 +61,16 @@ for (let i = 0; i<grid.length; i++) {
     }
   }
 }
-
 createGrid();
+
+
 
 const nodeListOfDivs = mainContent.querySelectorAll('.div')
 console.log(nodeListOfDivs)
 
-/*
-function createWalker(walkerPositionX, walkerPositionY) {
-  //  document.createElement("div").classList.add('div');
-    grid[walkerPositionX][walkerPositionY] = document.createElement("div").classList.add('div');
-    mainContent.appendChild(document.createElement("div"));
-    document.createElement("div").classList.add('walker');
-}
-createWalker(2,0)
-*/
-/*
-function getCoordinates(x,y) {
-    let hikerCoordinate = (9*x)+x+y;
-    return hikerCoordinate;
-}
-*/
+
+
+
 
 window.addEventListener('keydown', (event) => {
     //let walkerClass = document.querySelector('.walker');
@@ -95,21 +84,18 @@ window.addEventListener('keydown', (event) => {
         grid[walker.x][walker.y] = '4';
         walker.y++;
         grid[walker.x][walker.y] = "5";
-        } else if(grid[walker.x][walker.y+1] === '3') {
-            grid[walker.x][walker.y] = '4';
-            walker.y++;
-            grid[walker.x][walker.y] = "5";
-            grid[6][10] = '4';
-            nodeListOfDivs[82].classList.add('chemin'); 
-        }
-
-      
+        } 
     } 
 
-    
     if (event.key === 'ArrowLeft') { 
         console.log('left press');
-        if(grid[walker.x][walker.y-1] === '4'||grid[walker.x][walker.y-1] === '1') {
+        if(grid[walker.x][walker.y] === grid[1][0]) {
+            grid[walker.x][walker.y] = '4';
+            walker.x = 8;
+            walker.y = 0;
+            grid[walker.x][walker.y] = '5';
+        }
+        if(grid[walker.x][walker.y-1] === '4') {
         grid[walker.x][walker.y] = '4';
         walker.y--;
         grid[walker.x][walker.y] = "5";
@@ -120,18 +106,31 @@ window.addEventListener('keydown', (event) => {
             grid[6][10] = '4';
             nodeListOfDivs[82].classList.add('chemin'); 
         }
+        if(grid[walker.x][walker.y-1] === '1') {
+            grid[walker.x][walker.y] = '4';
+            walker.y--;
+            grid[walker.x][walker.y] = "5";
+            score = score + 1;
+            displayScore.innerHTML = score;
+        }
+
 
     } 
 
-    
     if (event.key === 'ArrowUp') { 
         console.log('up press');
         if(grid[walker.x-1][walker.y] === '4') {
             grid[walker.x][walker.y] = '4';
             walker.x--;
             grid[walker.x][walker.y] = "5";
-        } 
-        
+        }  
+        if (grid[walker.x-1][walker.y] === '1') {
+            grid[walker.x][walker.y] = '4';
+            walker.x--;
+            grid[walker.x][walker.y] = "5";
+            score = score + 1;
+            displayScore.innerHTML = score;
+        }
     } 
     
     if (event.key === 'ArrowDown') { 
@@ -149,17 +148,14 @@ window.addEventListener('keydown', (event) => {
             nodeListOfDivs[(11*i)+i+j].classList.add('walker');
         } else if (grid[i][j] === '4') {
             nodeListOfDivs[(11*i)+i+j].classList.remove('walker');
-            nodeListOfDivs[(11*i)+i+j].classList.remove('life'); 
+            nodeListOfDivs[(11*i)+i+j].classList.remove('life');
         } else if (grid[i][j] === '3') {
             nodeListOfDivs[(11*i)+i+j].classList.remove('walker');
             nodeListOfDivs[(11*i)+i+j].classList.add('open-wall'); 
         }
     }
-    
 }
-
 }
-
 );
 
 /*
