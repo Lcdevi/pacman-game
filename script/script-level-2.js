@@ -175,10 +175,10 @@ const merlin = new Wolf({
     wolfX: 8,
     wolfY: 10,
     index: 106,
-    speed: 140
+    speed: 180
 }); // creates a new instance of Wolf
 
-
+/*
 const perceval = new Wolf({
     name: "perceval",
     wolfX: 8,
@@ -186,9 +186,9 @@ const perceval = new Wolf({
     index: 105,
     speed: 100
 }); // creates an other instance of Wolf
-
+*/
 let wolvesArr = [];
-wolvesArr.push(merlin, perceval)
+wolvesArr.push(merlin)
 
 console.log(wolvesArr)
 
@@ -212,7 +212,8 @@ function moveWolves(wolf){
     console.log(direction)
     wolf.timerId = setInterval(function() {
     //if in the next square merlin is going to go to does not have a wall
-    if (!nodeListOfDivs[wolf.index + direction].classList.contains('wall')) {
+    if (!nodeListOfDivs[wolf.index + direction].classList.contains('wall')
+        && !nodeListOfDivs[wolf.index + direction].classList.contains('life')) {
          //remove the ghosts classes
          nodeListOfDivs[wolf.index].classList.remove(wolf.name)
          nodeListOfDivs[wolf.index].classList.remove('wolf')
@@ -221,7 +222,6 @@ function moveWolves(wolf){
         wolf.index += direction;
         nodeListOfDivs[wolf.index].classList.add(wolf.name, 'wolf')
         nodeListOfDivs[wolf.index].classList.remove('chemin')
-
     } else {direction = directions[Math.floor(Math.random() * directions.length)]};
 }, wolf.speed)
 
