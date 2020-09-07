@@ -31,11 +31,12 @@ const scoreToWin = 3;
     ['0','4','0','0','0','0','4','4','4','4','4','0'],
     ['0','4','4','4','3','4','4','0','0','0','0','0'],
     ['0','0','0','0','0','0','4','0','0','4','4','0'],
-    ['4','4','4','4','4','4','4','0','0','4','2','0'],
+    ['4','4','4','4','4','4','4','0','0','4','4','0'],
     ['0','0','0','0','0','0','0','0','0','0','0','0']
 ];
 
 grid[walker.x][walker.y] = "5";
+
 
 
 function createGrid() {
@@ -73,14 +74,12 @@ console.log(nodeListOfDivs)
 
 
 window.addEventListener('keydown', (event) => {
-    //let walkerClass = document.querySelector('.walker');
-   // arrayOfDiv[20].classList.remove('walker')
     if (event.key === 'ArrowRight') { 
         console.log('right press');
-        if(grid[walker.x][walker.y] === grid[win.x][win.y] && score === scoreToWin) {
+        if (grid[walker.x][walker.y] === grid[win.x][win.y] && score === scoreToWin) {
             alert("you win, you can go to the next level")
         }
-        if(grid[walker.x][walker.y+1] === '4'||grid[walker.x][walker.y+1] === '1') {
+        if (grid[walker.x][walker.y+1] === '4'||grid[walker.x][walker.y+1] === '1') {
         grid[walker.x][walker.y] = '4';
         walker.y++;
         grid[walker.x][walker.y] = "5";
@@ -89,24 +88,27 @@ window.addEventListener('keydown', (event) => {
 
     if (event.key === 'ArrowLeft') { 
         console.log('left press');
-        if(grid[walker.x][walker.y] === grid[1][0]) {
+        if (grid[walker.x][walker.y] === grid[1][0]) {
             grid[walker.x][walker.y] = '4';
             walker.x = 8;
             walker.y = 0;
             grid[walker.x][walker.y] = '5';
         }
-        if(grid[walker.x][walker.y-1] === '4') {
+        if (grid[walker.x][walker.y-1] === '4') {
         grid[walker.x][walker.y] = '4';
         walker.y--;
         grid[walker.x][walker.y] = "5";
-        } else if(grid[walker.x][walker.y-1] === '3') {
+        } else if (grid[walker.x][walker.y-1] === '3') {
             grid[walker.x][walker.y] = '4';
             walker.y--;
             grid[walker.x][walker.y] = "5";
             grid[6][10] = '4';
             nodeListOfDivs[82].classList.add('chemin'); 
+            nodeListOfDivs[82].classList.remove('wall'); 
+            nodeListOfDivs[81].classList.add('chemin'); 
+            nodeListOfDivs[81].classList.remove('wall'); 
         }
-        if(grid[walker.x][walker.y-1] === '1') {
+        if (grid[walker.x][walker.y-1] === '1') {
             grid[walker.x][walker.y] = '4';
             walker.y--;
             grid[walker.x][walker.y] = "5";
@@ -119,7 +121,7 @@ window.addEventListener('keydown', (event) => {
 
     if (event.key === 'ArrowUp') { 
         console.log('up press');
-        if(grid[walker.x-1][walker.y] === '4') {
+        if (grid[walker.x-1][walker.y] === '4') {
             grid[walker.x][walker.y] = '4';
             walker.x--;
             grid[walker.x][walker.y] = "5";
@@ -135,7 +137,7 @@ window.addEventListener('keydown', (event) => {
     
     if (event.key === 'ArrowDown') { 
         console.log('down press');
-        if(grid[walker.x+1][walker.y] === '4'||grid[walker.x+1][walker.y] === '1' ) {
+        if (grid[walker.x+1][walker.y] === '4'||grid[walker.x+1][walker.y] === '1' ) {
         grid[walker.x][walker.y] = '4';
         walker.x++;
         grid[walker.x][walker.y] = "5";
@@ -150,32 +152,86 @@ window.addEventListener('keydown', (event) => {
             nodeListOfDivs[(11*i)+i+j].classList.remove('walker');
             nodeListOfDivs[(11*i)+i+j].classList.remove('life');
         } else if (grid[i][j] === '3') {
-            nodeListOfDivs[(11*i)+i+j].classList.remove('walker');
-            nodeListOfDivs[(11*i)+i+j].classList.add('open-wall'); 
+          //  nodeListOfDivs[(11*i)+i+j].classList.remove('walker');
+           // nodeListOfDivs[(11*i)+i+j].classList.add('open-wall'); 
         }
     }
 }
 }
 );
 
-/*
-function move(walker) {
-    walker = {
-        x: 2,
-        y: 0,
-      };
-    grid[walker.x][walker.y] = '4';
-  
-    if (event.key === 'ArrowRight') { 
-      walker.y++;
-      
-    } else if (event.key === 'ArrowLeft') {
-        walker.y--;
-        console.log('left press')
+class Wolf {
+    constructor(infos) {
+      this.name = infos.name;
+      this.wolfX = infos.wolfX;
+      this.wolfY = infos.wolfY;
+      this.index = infos.index;
+      this.speed = infos.speed;
     }
-//let newPosition = { x: walker.x, y: walker.y}
+  }
 
-grid[walker.y][walker.x] = "5";
-}
+const merlin = new Wolf({
+    name: "merlin",
+    wolfX: 8,
+    wolfY: 10,
+    index: 106,
+    speed: 200
+}); // creates a new instance of Wolf
+
+/*
+const perceval = new Wolf({
+    name: "perceval",
+    wolfX: 8,
+    wolfY: 9,
+    index: 105,
+    speed: 100
+}); // creates an other instance of Wolf
 */
 
+
+
+//create the merlin the wolf in the DOM
+grid[merlin.wolfX][merlin.wolfY] = "2";
+nodeListOfDivs[merlin.index].classList.remove('chemin')
+nodeListOfDivs[merlin.index].classList.add(merlin.name, 'wolf')
+
+
+// move wolf function
+function moveWolves(wolf){
+    const directions = [-1, +1, -12, +12];
+    let direction = directions[Math.floor(Math.random() * directions.length)];
+    console.log(direction)
+    wolf.timerId = setInterval(function() {
+    //if in the next square merlin is going to go to does not have a wall
+    if (!nodeListOfDivs[wolf.index + direction].classList.contains('wall')) {
+         //remove the ghosts classes
+         nodeListOfDivs[wolf.index].classList.remove(merlin.name)
+         nodeListOfDivs[wolf.index].classList.remove('wolf')
+         nodeListOfDivs[wolf.index].classList.add('chemin')
+        //move into that space
+        wolf.index += direction;
+        nodeListOfDivs[wolf.index].classList.add(wolf.name, 'wolf')
+        nodeListOfDivs[wolf.index].classList.remove('chemin')
+
+    } else {direction = directions[Math.floor(Math.random() * directions.length)]};
+
+    for (let i = 0; i<grid.length; i++) {
+        for (let j = 0; j<grid[i].length; j++) {
+        if (grid[i][j] === '5') {
+            nodeListOfDivs[(11*i)+i+j].classList.add('walker');
+        } else if (grid[i][j] === '4') {
+            nodeListOfDivs[(11*i)+i+j].classList.remove('walker');
+            nodeListOfDivs[(11*i)+i+j].classList.remove('life');
+        } else if (grid[i][j] === '3') {
+          //  nodeListOfDivs[(11*i)+i+j].classList.remove('walker');
+           // nodeListOfDivs[(11*i)+i+j].classList.add('open-wall'); 
+        }
+    }
+
+}
+}, 200)
+
+    //else find a new random direction ot go in
+}
+
+moveWolves(merlin)

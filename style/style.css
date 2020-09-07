@@ -50,7 +50,6 @@
 }
 
 .wolf {
-    background-color: rgb(36, 36, 36);
     border-radius: 50%;
 }
 
@@ -61,4 +60,14 @@
 .walker {
     background-color: yellow;
     border-radius: 50%;
+}
+
+.merlin {
+    background-color: rgb(46, 46, 46);
+    border: 0px;
+}
+
+.perceval {
+    background-color: grey;
+    border: 0px;
 }
